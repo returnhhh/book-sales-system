@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.books.mapper.BooksMapper">
+    
+    <resultMap type="Books" id="BooksResult">
+        <result property="bookId"    column="book_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="bookName"    column="book_name"    />
+        <result property="author"    column="author"    />
+        <result property="press"    column="press"    />
+        <result property="bookType"    column="bookType"    />
+        <result property="bookImg"    column="book_img"    />
+        <result property="bookPrice"    column="book_price"    />
+        <result property="bookInventory"    column="book_inventory"    />
+        <result property="bookPressTime"    column="book_press_time"    />
+        <result property="bookNum"    column="book_num"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectBooksVo">
+        select book_id, create_by, create_date, update_by, update_date, book_name, author, press, bookType, book_img, book_price, book_inventory, book_press_time, book_num, create_time from books
+    </sql>
+
+    <select id="selectBooksList" parameterType="Books" resultMap="BooksResult">
+        <include refid="selectBooksVo"/>
+        <where>  
+            <if test="createDate != null "> and create_date = #{createDate}</if>
+            <if test="updateDate != null "> and update_date = #{updateDate}</if>
+            <if test="bookName != null  and bookName != ''"> and book_name like concat('%', #{bookName}, '%')</if>
+            <if test="author != null  and author != ''"> and author = #{author}</if>
+            <if test="press != null  and press != ''"> and press = #{press}</if>
+            <if test="bookType != null  and bookType != ''"> and bookType = #{bookType}</if>
+            <if test="bookImg != null  and bookImg != ''"> and book_img = #{bookImg}</if>
+            <if test="bookPrice != null "> and book_price = #{bookPrice}</if>
+            <if test="bookInventory != null  and bookInventory != ''"> and book_inventory = #{bookInventory}</if>
+            <if test="bookPressTime != null "> and book_press_time = #{bookPressTime}</if>
+            <if test="bookNum != null "> and book_num = #{bookNum}</if>
+        </where>
+    </select>
+    
+    <select id="selectBooksByBookId" parameterType="String" resultMap="BooksResult">
+        <include refid="selectBooksVo"/>
+        where book_id = #{bookId}
+    </select>
+
+<!--    新增图书-->
+    <insert id="insertBooks" parameterType="Books">
+        insert into books
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bookId != null">book_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createDate != null">create_date,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateDate != null">update_date,</if>
+            <if test="bookName != null">book_name,</if>
+            <if test="author != null">author,</if>
+            <if test="press != null">press,</if>
+            <if test="bookType != null">bookType,</if>
+            <if test="bookImg != null">book_img,</if>
+            <if test="bookPrice != null">book_price,</if>
+            <if test="bookInventory != null">book_inventory,</if>
+            <if test="bookPressTime != null">book_press_time,</if>
+            <if test="bookNum != null">book_num,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bookId != null">#{bookId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createDate != null">#{createDate},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateDate != null">#{updateDate},</if>
+            <if test="bookName != null">#{bookName},</if>
+            <if test="author != null">#{author},</if>
+            <if test="press != null">#{press},</if>
+            <if test="bookType != null">#{bookType},</if>
+            <if test="bookImg != null">#{bookImg},</if>
+            <if test="bookPrice != null">#{bookPrice},</if>
+            <if test="bookInventory != null">#{bookInventory},</if>
+            <if test="bookPressTime != null">#{bookPressTime},</if>
+            <if test="bookNum != null">#{bookNum},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBooks" parameterType="Books">
+        update books
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createDate != null">create_date = #{createDate},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateDate != null">update_date = #{updateDate},</if>
+            <if test="bookName != null">book_name = #{bookName},</if>
+            <if test="author != null">author = #{author},</if>
+            <if test="press != null">press = #{press},</if>
+            <if test="bookType != null">bookType = #{bookType},</if>
+            <if test="bookImg != null">book_img = #{bookImg},</if>
+            <if test="bookPrice != null">book_price = #{bookPrice},</if>
+            <if test="bookInventory != null">book_inventory = #{bookInventory},</if>
+            <if test="bookPressTime != null">book_press_time = #{bookPressTime},</if>
+            <if test="bookNum != null">book_num = #{bookNum},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where book_id = #{bookId}
+    </update>
+
+    <delete id="deleteBooksByBookId" parameterType="String">
+        delete from books where book_id = #{bookId}
+    </delete>
+
+    <delete id="deleteBooksByBookIds" parameterType="String">
+        delete from books where book_id in 
+        <foreach item="bookId" collection="array" open="(" separator="," close=")">
+            #{bookId}
+        </foreach>
+    </delete>
+</mapper>
