@@ -20,15 +20,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="bookPressTime"    column="book_press_time"    />
         <result property="bookNum"    column="book_num"    />
         <result property="createTime"    column="create_time"    />
+        <result property="bookNumber"    column="book_number"    />
     </resultMap>
 
+<!--    查询图书-->
     <sql id="selectBooksVo">
-        select book_id, create_by, create_date, update_by, update_date, book_name, author, press, bookType, book_img, book_price, book_inventory, book_press_time, book_num, create_time from books
+        select ROW_NUMBER() OVER (ORDER BY book_id ASC) AS book_number,
+            book_id, create_by, create_date, update_by, update_date, book_name, author, press, bookType, book_img, book_price, book_inventory, book_press_time, book_num, create_time
+        from books
     </sql>
 
     <select id="selectBooksList" parameterType="Books" resultMap="BooksResult">
         <include refid="selectBooksVo"/>
-        <where>  
+        <where>
             <if test="createDate != null "> and create_date = #{createDate}</if>
             <if test="updateDate != null "> and update_date = #{updateDate}</if>
             <if test="bookName != null  and bookName != ''"> and book_name like concat('%', #{bookName}, '%')</if>
@@ -87,6 +91,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
     </insert>
 
+<!--    修改图书-->
     <update id="updateBooks" parameterType="Books">
         update books
         <trim prefix="SET" suffixOverrides=",">
@@ -108,6 +113,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where book_id = #{bookId}
     </update>
 
+<!--    删除图书-->
     <delete id="deleteBooksByBookId" parameterType="String">
         delete from books where book_id = #{bookId}
     </delete>

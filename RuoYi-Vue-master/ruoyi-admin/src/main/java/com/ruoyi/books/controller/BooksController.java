@@ -47,6 +47,7 @@ public class BooksController extends BaseController
     {
         startPage();
         List<Books> list = booksService.selectBooksList(books);
+        System.out.println(list);
         return getDataTable(list);
     }
 

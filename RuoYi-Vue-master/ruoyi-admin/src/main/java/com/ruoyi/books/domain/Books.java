@@ -68,6 +68,10 @@ public class Books extends BaseEntity
     @Excel(name = "库存")
     private Long bookNum;
 
+    /** 排序 */
+    @Excel(name = "排序")
+    private Integer bookNumber;
+
     public Integer getBookId() {
         return bookId;
     }
@@ -174,6 +178,14 @@ public class Books extends BaseEntity
     public Long getBookNum() 
     {
         return bookNum;
+    }
+
+    public Integer getBookNumber() {
+        return bookNumber;
+    }
+
+    public void setBookNumber(Integer bookNumber) {
+        this.bookNumber = bookNumber;
     }
 
     @Override

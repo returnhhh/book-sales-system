@@ -138,6 +138,7 @@
 <!--    显示书籍信息-->
     <el-table v-loading="loading" :data="booksList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
+      <el-table-column label="排序" align="center" prop="bookNumber" />
       <el-table-column label="图书id" align="center" prop="bookId" />
       <el-table-column label="创建时间" align="center" prop="createDate" width="180">
         <template slot-scope="scope">
@@ -153,7 +154,11 @@
       <el-table-column label="作者" align="center" prop="author" />
       <el-table-column label="出版社" align="center" prop="press" />
       <el-table-column label="图书类型" align="center" prop="bookType" />
-      <el-table-column label="图片" align="center" prop="bookImg" />
+      <el-table-column label="图片" align="center" prop="bookImg" width="100">
+        <template slot-scope="scope">
+          <image-preview :src="scope.row.bookImg" :width="100" :height="100"/>
+        </template>
+      </el-table-column>
       <el-table-column label="价格" align="center" prop="bookPrice" />
       <el-table-column label="书籍简介" align="center" prop="bookInventory" />
       <el-table-column label="出版时间" align="center" prop="bookPressTime" width="180">
@@ -219,7 +224,7 @@
           <el-input v-model="form.press" placeholder="请输入出版社" />
         </el-form-item>
         <el-form-item label="图片" prop="bookImg">
-          <el-input v-model="form.bookImg" placeholder="请输入图片" />
+          <image-upload v-model="form.bookImg" limit="1"></image-upload>
         </el-form-item>
         <el-form-item label="价格" prop="bookPrice">
           <el-input v-model="form.bookPrice" placeholder="请输入价格" />
@@ -276,6 +281,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
+        bookNumber: null,
         createDate: null,
         updateDate: null,
         bookName: null,
@@ -316,6 +322,7 @@ export default {
     // 表单重置
     reset() {
       this.form = {
+        bookNumber:null,
         bookId: null,
         createBy: null,
         createDate: null,
