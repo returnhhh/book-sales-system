@@ -18,6 +18,14 @@
 <!--          placeholder="请选择更新时间">-->
 <!--        </el-date-picker>-->
 <!--      </el-form-item>-->
+      <el-form-item label="图书编号" prop="bookId">
+        <el-input
+          v-model="queryParams.bookId"
+          placeholder="请输入图书编号"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item label="书籍名称" prop="bookName">
         <el-input
           v-model="queryParams.bookName"
@@ -42,22 +50,22 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="图片" prop="bookImg">
-        <el-input
-          v-model="queryParams.bookImg"
-          placeholder="请输入图片"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="价格" prop="bookPrice">
-        <el-input
-          v-model="queryParams.bookPrice"
-          placeholder="请输入价格"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+<!--      <el-form-item label="图片" prop="bookImg">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.bookImg"-->
+<!--          placeholder="请输入图片"-->
+<!--          clearable-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="价格" prop="bookPrice">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.bookPrice"-->
+<!--          placeholder="请输入价格"-->
+<!--          clearable-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
 <!--      <el-form-item label="书籍简介" prop="bookInventory">-->
 <!--        <el-input-->
 <!--          v-model="queryParams.bookInventory"-->
@@ -139,7 +147,7 @@
     <el-table v-loading="loading" :data="booksList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="排序" align="center" prop="bookNumber" />
-      <el-table-column label="图书id" align="center" prop="bookId" />
+      <el-table-column label="图书编号" align="center" prop="bookId" />
       <el-table-column label="创建时间" align="center" prop="createDate" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createDate, `{y}-{m}-{d} {h}:{i}:{s}`) }}</span>
@@ -281,6 +289,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
+        bookId: null,
         bookNumber: null,
         createDate: null,
         updateDate: null,

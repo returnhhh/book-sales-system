@@ -33,6 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectBooksList" parameterType="Books" resultMap="BooksResult">
         <include refid="selectBooksVo"/>
         <where>
+            <if test="bookId != null "> and book_id = #{bookId}</if>
             <if test="createDate != null "> and create_date = #{createDate}</if>
             <if test="updateDate != null "> and update_date = #{updateDate}</if>
             <if test="bookName != null  and bookName != ''"> and book_name like concat('%', #{bookName}, '%')</if>
