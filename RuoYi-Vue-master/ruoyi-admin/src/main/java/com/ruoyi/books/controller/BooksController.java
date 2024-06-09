@@ -1,11 +1,9 @@
 package com.ruoyi.books.controller;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ruoyi.common.core.domain.entity.SysUser;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,7 +45,6 @@ public class BooksController extends BaseController
     {
         startPage();
         List<Books> list = booksService.selectBooksList(books);
-        System.out.println(list);
         return getDataTable(list);
     }
 
@@ -82,8 +79,6 @@ public class BooksController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody Books books)
     {
-        books.setCreateBy(getUsername());
-        books.setCreateDate(LocalDateTime.now());
         return toAjax(booksService.insertBooks(books));
     }
 

@@ -1,12 +1,17 @@
 package com.ruoyi.books.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
+import com.ruoyi.SnowFlakeUtil.java.SnowFlakeUtil;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.books.mapper.BooksMapper;
 import com.ruoyi.books.domain.Books;
 import com.ruoyi.books.service.IBooksService;
+
+import static com.ruoyi.common.utils.SecurityUtils.getUsername;
 
 /**
  * 图书商城信息Service业务层处理
@@ -19,6 +24,8 @@ public class BooksServiceImpl implements IBooksService
 {
     @Autowired
     private BooksMapper booksMapper;
+
+    SnowFlakeUtil snowFlakeUtil = new SnowFlakeUtil();
 
     /**
      * 查询图书商城信息
@@ -53,6 +60,9 @@ public class BooksServiceImpl implements IBooksService
     @Override
     public int insertBooks(Books books)
     {
+        books.setBookId(snowFlakeUtil.nextId());
+        books.setCreateBy(getUsername());
+        books.setCreateDate(LocalDateTime.now());
         books.setCreateTime(DateUtils.getNowDate());
         return booksMapper.insertBooks(books);
     }
