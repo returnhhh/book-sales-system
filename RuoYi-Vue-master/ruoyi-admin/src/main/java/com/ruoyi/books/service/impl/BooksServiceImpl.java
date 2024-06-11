@@ -60,7 +60,7 @@ public class BooksServiceImpl implements IBooksService
     @Override
     public int insertBooks(Books books)
     {
-        books.setBookId(snowFlakeUtil.nextId());
+        books.setBookId(String.valueOf(snowFlakeUtil.nextId()));
         books.setCreateBy(getUsername());
         books.setCreateDate(LocalDateTime.now());
         books.setCreateTime(DateUtils.getNowDate());

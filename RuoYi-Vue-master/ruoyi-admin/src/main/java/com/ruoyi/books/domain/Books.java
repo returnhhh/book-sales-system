@@ -19,7 +19,7 @@ public class Books extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 图书id */
-    private Long bookId;
+    private String bookId;
 
     /** 创建时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -72,11 +72,11 @@ public class Books extends BaseEntity
     @Excel(name = "排序")
     private Integer bookNumber;
 
-    public Long getBookId() {
+    public String getBookId() {
         return bookId;
     }
 
-    public void setBookId(Long bookId) {
+    public void setBookId(String bookId) {
         this.bookId = bookId;
     }
 
