@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.shoppingCart.mapper.ShoppingCartMapper">
+    
+    <resultMap type="ShoppingCart" id="ShoppingCartResult">
+        <result property="scId"    column="sc_id"    />
+        <result property="bookId"    column="book_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="num"    column="num"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectShoppingCartVo">
+        select sc_id, book_id, user_id, num, create_time from shopping_cart
+    </sql>
+
+<!--    联表查询-->
+    <sql id="selectShoppingCar">
+        select book_id, book_name, author, book_img, book_price from books
+    </sql>
+
+    <select id="selectShoppingCartList" parameterType="ShoppingCart" resultMap="ShoppingCartResult">
+        <include refid="selectShoppingCartVo"/>
+        <where>  
+            <if test="bookId != null  and bookId != ''"> and book_id = #{bookId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="num != null "> and num = #{num}</if>
+        </where>
+    </select>
+    
+    <select id="selectShoppingCartByScId" parameterType="String" resultMap="ShoppingCartResult">
+        <include refid="selectShoppingCartVo"/>
+        where sc_id = #{scId}
+    </select>
+
+<!--    添加购物车-->
+    <insert id="insertShoppingCart" parameterType="ShoppingCart">
+        insert into shopping_cart
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="scId != null">sc_id,</if>
+            <if test="bookId != null">book_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="num != null">num,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="scId != null">#{scId},</if>
+            <if test="bookId != null">#{bookId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="num != null">#{num},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateShoppingCart" parameterType="ShoppingCart">
+        update shopping_cart
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="bookId != null">book_id = #{bookId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="num != null">num = #{num},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where sc_id = #{scId}
+    </update>
+
+    <delete id="deleteShoppingCartByScId" parameterType="String">
+        delete from shopping_cart where sc_id = #{scId}
+    </delete>
+
+    <delete id="deleteShoppingCartByScIds" parameterType="String">
+        delete from shopping_cart where sc_id in 
+        <foreach item="scId" collection="array" open="(" separator="," close=")">
+            #{scId}
+        </foreach>
+    </delete>
+</mapper>

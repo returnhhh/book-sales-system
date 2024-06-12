@@ -58,38 +58,6 @@
 
 <!--    增删改导按钮-->
     <el-row :gutter="10" class="mb8">
-<!--      <el-col :span="1.5">-->
-<!--        <el-button-->
-<!--          type="primary"-->
-<!--          plain-->
-<!--          icon="el-icon-plus"-->
-<!--          size="mini"-->
-<!--          @click="handleAdd"-->
-<!--          v-hasPermi="['userBooks:books:add']"-->
-<!--        >新增</el-button>-->
-<!--      </el-col>-->
-<!--      <el-col :span="1.5">-->
-<!--        <el-button-->
-<!--          type="success"-->
-<!--          plain-->
-<!--          icon="el-icon-edit"-->
-<!--          size="mini"-->
-<!--          :disabled="single"-->
-<!--          @click="handleUpdate"-->
-<!--          v-hasPermi="['userBooks:books:edit']"-->
-<!--        >修改</el-button>-->
-<!--      </el-col>-->
-<!--      <el-col :span="1.5">-->
-<!--        <el-button-->
-<!--          type="danger"-->
-<!--          plain-->
-<!--          icon="el-icon-delete"-->
-<!--          size="mini"-->
-<!--          :disabled="multiple"-->
-<!--          @click="handleDelete"-->
-<!--          v-hasPermi="['userBooks:books:remove']"-->
-<!--        >删除</el-button>-->
-<!--      </el-col>-->
       <el-col :span="1.5">
         <el-button
           type="warning"
@@ -108,16 +76,6 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="排序" align="center" prop="bookNumber" />
       <el-table-column label="图书编号" align="center" prop="bookId" />
-      <el-table-column label="创建时间" align="center" prop="createDate" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.createDate, `{y}-{m}-{d} {h}:{i}:{s}`) }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="更新时间" align="center" prop="updateDate" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.updateDate, `{y}-{m}-{d} {h}:{i}:{s}`) }}</span>
-        </template>
-      </el-table-column>
       <el-table-column label="书籍名称" align="center" prop="bookName" />
       <el-table-column label="作者" align="center" prop="author" />
       <el-table-column label="出版社" align="center" prop="press" />
@@ -136,22 +94,11 @@
       </el-table-column>
       <el-table-column label="库存" align="center" prop="bookNum" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-<!--        <template slot-scope="scope">-->
-<!--          <el-button-->
-<!--            size="mini"-->
-<!--            type="text"-->
-<!--            icon="el-icon-edit"-->
-<!--            @click="handleUpdate(scope.row)"-->
-<!--            v-hasPermi="['userBooks:books:edit']"-->
-<!--          >修改</el-button>-->
-<!--          <el-button-->
-<!--            size="mini"-->
-<!--            type="text"-->
-<!--            icon="el-icon-delete"-->
-<!--            @click="handleDelete(scope.row)"-->
-<!--            v-hasPermi="['userBooks:books:remove']"-->
-<!--          >删除</el-button>-->
-<!--        </template>-->
+        <template slot-scope="scope">
+          <el-input-number style="width: 120px; margin-left: 1px; margin-bottom: 10px;" v-model="form.num" :min="1" :max="100" label="描述文字"></el-input-number>
+          <br />
+          <el-button style="background-color: orangered; margin-left: 1px; color: white; margin-top: 10px;" @click="handleAddCart(scope.row)">加入购物车</el-button>
+        </template>
       </el-table-column>
     </el-table>
 
@@ -162,50 +109,13 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
-
-    <!-- 添加或修改图书商城信息对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="书籍名称" prop="bookName">
-          <el-input v-model="form.bookName" placeholder="请输入书籍名称" />
-        </el-form-item>
-        <el-form-item label="作者" prop="author">
-          <el-input v-model="form.author" placeholder="请输入作者" />
-        </el-form-item>
-        <el-form-item label="出版社" prop="press">
-          <el-input v-model="form.press" placeholder="请输入出版社" />
-        </el-form-item>
-        <el-form-item label="图片" prop="bookImg">
-          <image-upload v-model="form.bookImg" limit="1"></image-upload>
-        </el-form-item>
-        <el-form-item label="价格" prop="bookPrice">
-          <el-input v-model="form.bookPrice" placeholder="请输入价格" />
-        </el-form-item>
-        <el-form-item label="书籍简介" prop="bookInventory">
-          <el-input v-model="form.bookInventory" placeholder="请输入书籍简介" />
-        </el-form-item>
-        <el-form-item label="出版时间" prop="bookPressTime">
-          <el-date-picker clearable
-            v-model="form.bookPressTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="请选择出版时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="库存" prop="bookNum">
-          <el-input v-model="form.bookNum" placeholder="请输入库存" />
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
 <script>
-import { listBooks, getBooks, delBooks, addBooks, updateBooks } from "@/api/userBooks/books";
+import { listBooks } from "@/api/userBooks/books";
+import {addCart} from "@/api/shoppingCart/cart";
+import data from "@/views/system/dict/data.vue";
 
 export default {
   name: "Books",
@@ -223,6 +133,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
+      //传参id
+      bookId:this.$route.query.bookId,
       // 图书商城信息表格数据
       booksList: [],
       // 弹出层标题
@@ -248,7 +160,8 @@ export default {
         bookNum: null,
       },
       // 表单参数
-      form: {},
+      form: { num: 1 },
+      user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
       // 表单校验
       rules: {
       }
@@ -275,6 +188,7 @@ export default {
     // 表单重置
     reset() {
       this.form = {
+        num: null,
         bookNumber:null,
         bookId: null,
         createBy: null,
@@ -294,6 +208,16 @@ export default {
       };
       this.resetForm("form");
     },
+    /** 添加到购物车按钮 */
+    handleAddCart(row) {
+      const bookIds = row.bookId || this.ids;
+      this.$modal.confirm('是否添加图书编号为"' + bookIds + '"的数据项？').then(function() {
+        return addCart(data);
+      }).then(() => {
+        this.getList();
+        this.$modal.msgSuccess("添加成功");
+      }).catch(() => {});
+    },
     /** 搜索按钮操作 */
     handleQuery() {
       this.queryParams.pageNum = 1;
@@ -309,52 +233,6 @@ export default {
       this.ids = selection.map(item => item.bookId)
       this.single = selection.length!==1
       this.multiple = !selection.length
-    },
-    /** 新增按钮操作 */
-    handleAdd() {
-      this.reset();
-      this.open = true;
-      this.title = "添加图书商城信息";
-    },
-    /** 修改按钮操作 */
-    handleUpdate(row) {
-      this.reset();
-      const bookId = row.bookId || this.ids
-      getBooks(bookId).then(response => {
-        this.form = response.data;
-        this.open = true;
-        this.title = "修改图书商城信息";
-      });
-    },
-    /** 提交按钮 */
-    submitForm() {
-      this.$refs["form"].validate(valid => {
-        if (valid) {
-          if (this.form.bookId != null) {
-            updateBooks(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
-          } else {
-            addBooks(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
-          }
-        }
-      });
-    },
-    /** 删除按钮操作 */
-    handleDelete(row) {
-      const bookIds = row.bookId || this.ids;
-      this.$modal.confirm('是否确认删除图书商城信息编号为"' + bookIds + '"的数据项？').then(function() {
-        return delBooks(bookIds);
-      }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
     },
     /** 导出按钮操作 */
     handleExport() {
