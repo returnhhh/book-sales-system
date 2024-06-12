@@ -37,11 +37,10 @@ public class ShoppingCart extends BaseEntity
     private String bookImg;
 
     /** 价格 */
-    private Double prive;
+    private Double price;
 
     /** 用户名 */
     private String userName;
-    private String nickName;
 
     public void setScId(String scId) 
     {
@@ -80,6 +79,38 @@ public class ShoppingCart extends BaseEntity
         return num;
     }
 
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
+
+    public String getBookImg() {
+        return bookImg;
+    }
+
+    public void setBookImg(String bookImg) {
+        this.bookImg = bookImg;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -87,7 +118,10 @@ public class ShoppingCart extends BaseEntity
             .append("bookId", getBookId())
             .append("userId", getUserId())
             .append("num", getNum())
-            .append("createTime", getCreateTime())
+            .append("bookName", getBookName())
+            .append("bookImg", getBookImg())
+            .append("price", getPrice())
+            .append("userName", getUserName())
             .toString();
     }
 }

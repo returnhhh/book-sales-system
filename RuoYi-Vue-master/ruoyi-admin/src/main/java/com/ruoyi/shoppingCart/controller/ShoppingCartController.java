@@ -2,6 +2,9 @@ package com.ruoyi.shoppingCart.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.books.domain.Books;
+import com.ruoyi.books.service.IBooksService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +37,8 @@ public class ShoppingCartController extends BaseController
     @Autowired
     private IShoppingCartService shoppingCartService;
 
+    @Autowired
+    private IBooksService booksService;
     /**
      * 查询购物车信息列表
      */
@@ -74,9 +79,16 @@ public class ShoppingCartController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('shoppingCart:cart:add')")
     @Log(title = "购物车信息", businessType = BusinessType.INSERT)
-    @PostMapping
-    public AjaxResult add(@RequestBody ShoppingCart shoppingCart)
+    @PostMapping(value = "/{bookId}")
+    public AjaxResult add(@PathVariable String bookId)
     {
+        Books books = booksService.selectBooksByBookId(bookId);
+        System.out.println(books);
+        ShoppingCart shoppingCart=new ShoppingCart();
+        shoppingCart.setBookId(bookId);
+        shoppingCart.setBookName(books.getBookName());
+        shoppingCart.setBookImg(books.getBookImg());
+        shoppingCart.setPrice(books.getBookPrice());
         return toAjax(shoppingCartService.insertShoppingCart(shoppingCart));
     }
 

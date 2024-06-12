@@ -63,10 +63,10 @@ public class ShoppingCartServiceImpl implements IShoppingCartService
     @Override
     public int insertShoppingCart(ShoppingCart shoppingCart)
     {
-        shoppingCart.setBookId(books.getBookId());
         shoppingCart.setScId(String.valueOf(snowFlakeUtil.nextId()));
         shoppingCart.setUserId(getUserId());
         shoppingCart.setCreateTime(DateUtils.getNowDate());
+        System.out.println(shoppingCart);
         return shoppingCartMapper.insertShoppingCart(shoppingCart);
     }
 

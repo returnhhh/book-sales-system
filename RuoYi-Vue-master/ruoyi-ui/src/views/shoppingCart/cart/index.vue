@@ -34,27 +34,6 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['shoppingCart:cart:add']"
-        >新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['shoppingCart:cart:edit']"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
           type="danger"
           plain
           icon="el-icon-delete"
@@ -83,6 +62,13 @@
       <el-table-column label="图书id" align="center" prop="bookId" />
       <el-table-column label="用户id" align="center" prop="userId" />
       <el-table-column label="数量" align="center" prop="num" />
+      <el-table-column label="书名" align="center" prop="bookName" />
+      <el-table-column label="图片" align="center" prop="bookImg" width="100">
+        <template slot-scope="scope">
+          <image-preview :src="scope.row.bookImg" :width="100" :height="100"/>
+        </template>
+      </el-table-column>
+      <el-table-column label="价格" align="center" prop="price" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -102,7 +88,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -114,12 +100,6 @@
     <!-- 添加或修改购物车信息对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="图书id" prop="bookId">
-          <el-input v-model="form.bookId" placeholder="请输入图书id" />
-        </el-form-item>
-        <el-form-item label="用户id" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入用户id" />
-        </el-form-item>
         <el-form-item label="数量" prop="num">
           <el-input v-model="form.num" placeholder="请输入数量" />
         </el-form-item>
@@ -164,6 +144,10 @@ export default {
         bookId: null,
         userId: null,
         num: null,
+        bookName: null,
+        bookImg: null,
+        price: null,
+        userName: null
       },
       // 表单参数
       form: {},
@@ -197,7 +181,11 @@ export default {
         bookId: null,
         userId: null,
         num: null,
-        createTime: null
+        createTime: null,
+        bookName: null,
+        bookImg: null,
+        price: null,
+        userName: null
       };
       this.resetForm("form");
     },

@@ -113,9 +113,8 @@
 </template>
 
 <script>
-import { listBooks } from "@/api/userBooks/books";
+import {getBooks, listBooks} from "@/api/userBooks/books";
 import {addCart} from "@/api/shoppingCart/cart";
-import data from "@/views/system/dict/data.vue";
 
 export default {
   name: "Books",
@@ -161,7 +160,6 @@ export default {
       },
       // 表单参数
       form: { num: 1 },
-      user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
       // 表单校验
       rules: {
       }
@@ -212,9 +210,10 @@ export default {
     handleAddCart(row) {
       const bookIds = row.bookId || this.ids;
       this.$modal.confirm('是否添加图书编号为"' + bookIds + '"的数据项？').then(function() {
-        return addCart(data);
+        getBooks(bookIds)
+        return addCart(bookIds);
       }).then(() => {
-        this.getList();
+
         this.$modal.msgSuccess("添加成功");
       }).catch(() => {});
     },
