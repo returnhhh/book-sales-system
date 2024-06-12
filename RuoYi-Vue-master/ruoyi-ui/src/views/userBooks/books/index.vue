@@ -26,6 +26,14 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="图书类型" prop="bookType">
+        <el-input
+          v-model="queryParams.bookType"
+          placeholder="请输入图书类型"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item label="出版社" prop="press">
         <el-input
           v-model="queryParams.press"
