@@ -18,11 +18,11 @@ export function getCart(scId) {
 }
 
 // 新增购物车信息
-export function addCart(bookIds) {
+export function addCart(data) {
   return request({
-    url: '/shoppingCart/cart/'+bookIds,
+    url: '/shoppingCart/cart',
     method: 'post',
-    data: bookIds
+    data: data
   })
 }
 

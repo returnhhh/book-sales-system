@@ -159,7 +159,13 @@ export default {
         bookNum: null,
       },
       // 表单参数
-      form: { num: 1 },
+      form: {
+        num: 1,
+        bookId:null,
+        bookName:null,
+        bookImg: null,
+        bookPrice: null
+      },
       // 表单校验
       rules: {
       }
@@ -208,12 +214,17 @@ export default {
     },
     /** 添加到购物车按钮 */
     handleAddCart(row) {
-      const bookIds = row.bookId || this.ids;
-      this.$modal.confirm('是否添加图书编号为"' + bookIds + '"的数据项？').then(function() {
-        getBooks(bookIds)
-        return addCart(bookIds);
-      }).then(() => {
+      this.form.bookId = row.bookId
+      this.form.bookName = row.bookName
+      this.form.price = row.bookPrice
+      this.form.bookImg = row.bookImg
+      console.log(this.form);
 
+      const bookIds = row.bookId || this.ids;
+      const books = this.form;
+      this.$modal.confirm('是否添加图书编号为"' + bookIds + '"的数据项？').then(function() {
+        return addCart(books);
+      }).then(() => {
         this.$modal.msgSuccess("添加成功");
       }).catch(() => {});
     },

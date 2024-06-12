@@ -79,16 +79,9 @@ public class ShoppingCartController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('shoppingCart:cart:add')")
     @Log(title = "购物车信息", businessType = BusinessType.INSERT)
-    @PostMapping(value = "/{bookId}")
-    public AjaxResult add(@PathVariable String bookId)
+    @PostMapping
+    public AjaxResult add(@RequestBody ShoppingCart shoppingCart)
     {
-        Books books = booksService.selectBooksByBookId(bookId);
-        System.out.println(books);
-        ShoppingCart shoppingCart=new ShoppingCart();
-        shoppingCart.setBookId(bookId);
-        shoppingCart.setBookName(books.getBookName());
-        shoppingCart.setBookImg(books.getBookImg());
-        shoppingCart.setPrice(books.getBookPrice());
         return toAjax(shoppingCartService.insertShoppingCart(shoppingCart));
     }
 
