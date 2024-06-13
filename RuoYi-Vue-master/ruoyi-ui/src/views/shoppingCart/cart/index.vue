@@ -71,6 +71,42 @@
       <el-table-column label="价格" align="center" prop="price" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
+            <div>
+              <!-- 触发对话框显示的按钮 -->
+              <el-button type="primary" @click="dialogVisible = true">下单</el-button>
+
+              <!-- 对话框组件 -->
+              <el-dialog
+                title="请输入收货人信息"
+                :visible.sync="dialogVisible"
+                width="50%"
+                @close="dialogVisible = false">
+                <!-- 对话框内容 -->
+                <el-form>
+                <el-form-item label="收货人姓名" prop="contactName">
+                <el-input  v-model="scope.row.contactName" placeholder="请输入收货人姓名"></el-input>
+                </el-form-item>
+                <el-form-item label="联系电话" prop="contactName">
+                <el-input  v-model="scope.row.phone" placeholder="请输入联系电话"></el-input>
+                </el-form-item>
+                <el-form-item label="收货地址" prop="contactName">
+                <el-input  v-model="scope.row.address" placeholder="请输入收货地址"></el-input>
+                </el-form-item>
+                <!-- 对话框底部操作按钮 -->
+                </el-form>
+                <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="handleAddOrder(scope.row)">确定</el-button>
+      </span>
+              </el-dialog>
+            </div>
+<!--          <el-button-->
+<!--            style="background-color: orangered;-->
+<!--            margin-left: 1px;-->
+<!--            color: white;-->
+<!--            margin-top: 10px;"-->
+<!--            @click="handleAddOrder(scope.row)"-->
+<!--          >下单</el-button>-->
           <el-button
             size="mini"
             type="text"
@@ -114,11 +150,13 @@
 
 <script>
 import { listCart, getCart, delCart, addCart, updateCart } from "@/api/shoppingCart/cart";
+import {addOrder} from "@/api/orderManagement/order";
 
 export default {
   name: "Cart",
   data() {
     return {
+      dialogVisible: false, // 控制对话框的显示与隐藏
       // 遮罩层
       loading: true,
       // 选中数组
@@ -147,10 +185,15 @@ export default {
         bookName: null,
         bookImg: null,
         price: null,
-        userName: null
+        userName: null,
+        phone: null
       },
       // 表单参数
-      form: {},
+      form: {
+        phone: null,
+        contactName:null,
+        address:null
+      },
       // 表单校验
       rules: {
       }
@@ -189,6 +232,29 @@ export default {
       };
       this.resetForm("form");
     },
+    /** 购物车物品添加到订单按钮 */
+    handleAddOrder(row) {
+      this.form.scId = row.scId
+      this.form.bookId = row.bookId
+      this.form.userId = row.userId
+      this.form.bookName = row.bookName
+      this.form.price = row.price
+      this.form.bookImg = row.bookImg
+      this.form.num = row.num
+      this.form.userName = row.userName
+      this.form.phone = row.phone
+      this.form.contactName = row.contactName
+      this.form.address = row.address
+      console.log(this.form);
+
+      const scIds = row.scId || this.ids;
+      const books = this.form;
+      this.$modal.confirm('是否添加订单id为"' + scIds + '"的数据项？').then(function() {
+        return addOrder(books);
+      }).then(() => {
+        this.$modal.msgSuccess("添加成功");
+      }).catch(() => {});
+    },
     /** 搜索按钮操作 */
     handleQuery() {
       this.queryParams.pageNum = 1;
@@ -204,6 +270,12 @@ export default {
       this.ids = selection.map(item => item.scId)
       this.single = selection.length!==1
       this.multiple = !selection.length
+    },
+    /** 添加到订单按钮 */
+    handleAddOrders() {
+      this.reset();
+      this.open = true;
+      this.title = "添加购物车信息";
     },
     /** 新增按钮操作 */
     handleAdd() {

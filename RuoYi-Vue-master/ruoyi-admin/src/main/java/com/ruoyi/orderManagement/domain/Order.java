@@ -34,7 +34,7 @@ public class Order extends BaseEntity
 
     /** 价格 */
     @Excel(name = "价格")
-    private Long price;
+    private Double price;
 
     /** 数量 */
     @Excel(name = "数量")
@@ -42,7 +42,7 @@ public class Order extends BaseEntity
 
     /** 总价 */
     @Excel(name = "总价")
-    private Long allPrice;
+    private Double allPrice;
 
     /** 收货人姓名 */
     @Excel(name = "收货人姓名")
@@ -102,12 +102,12 @@ public class Order extends BaseEntity
     {
         return bookId;
     }
-    public void setPrice(Long price) 
+    public void setPrice(Double price)
     {
         this.price = price;
     }
 
-    public Long getPrice() 
+    public Double getPrice()
     {
         return price;
     }
@@ -120,12 +120,12 @@ public class Order extends BaseEntity
     {
         return num;
     }
-    public void setAllPrice(Long allPrice) 
+    public void setAllPrice(Double allPrice)
     {
         this.allPrice = allPrice;
     }
 
-    public Long getAllPrice() 
+    public Double getAllPrice()
     {
         return allPrice;
     }

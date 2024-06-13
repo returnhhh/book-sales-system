@@ -1,14 +1,6 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-<!--      <el-form-item label="用户名" prop="userName">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.userName"-->
-<!--          placeholder="请输入用户名"-->
-<!--          clearable-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
       <el-form-item label="书名" prop="bookName">
         <el-input
           v-model="queryParams.bookName"
@@ -25,54 +17,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-<!--      <el-form-item label="价格" prop="price">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.price"-->
-<!--          placeholder="请输入价格"-->
-<!--          clearable-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
-<!--      <el-form-item label="数量" prop="num">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.num"-->
-<!--          placeholder="请输入数量"-->
-<!--          clearable-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
-<!--      <el-form-item label="总价" prop="allPrice">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.allPrice"-->
-<!--          placeholder="请输入总价"-->
-<!--          clearable-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
-<!--      <el-form-item label="收货人姓名" prop="contactName">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.contactName"-->
-<!--          placeholder="请输入收货人姓名"-->
-<!--          clearable-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
-<!--      <el-form-item label="收货人手机号" prop="phone">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.phone"-->
-<!--          placeholder="请输入收货人手机号"-->
-<!--          clearable-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
-<!--      <el-form-item label="收货人地址" prop="address">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.address"-->
-<!--          placeholder="请输入收货人地址"-->
-<!--          clearable-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -81,14 +25,14 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['orderManagement:order:add']"
-        >新增</el-button>
+<!--        <el-button-->
+<!--          type="primary"-->
+<!--          plain-->
+<!--          icon="el-icon-plus"-->
+<!--          size="mini"-->
+<!--          @click="handleAdd"-->
+<!--          v-hasPermi="['orderManagement:order:add']"-->
+<!--        >新增</el-button>-->
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -168,24 +112,6 @@
     <!-- 添加或修改订单管理对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="用户名" prop="userName">
-          <el-input v-model="form.userName" placeholder="请输入用户名" />
-        </el-form-item>
-        <el-form-item label="书名" prop="bookName">
-          <el-input v-model="form.bookName" placeholder="请输入书名" />
-        </el-form-item>
-        <el-form-item label="图书id" prop="bookId">
-          <el-input v-model="form.bookId" placeholder="请输入图书id" />
-        </el-form-item>
-        <el-form-item label="价格" prop="price">
-          <el-input v-model="form.price" placeholder="请输入价格" />
-        </el-form-item>
-        <el-form-item label="数量" prop="num">
-          <el-input v-model="form.num" placeholder="请输入数量" />
-        </el-form-item>
-        <el-form-item label="总价" prop="allPrice">
-          <el-input v-model="form.allPrice" placeholder="请输入总价" />
-        </el-form-item>
         <el-form-item label="收货人姓名" prop="contactName">
           <el-input v-model="form.contactName" placeholder="请输入收货人姓名" />
         </el-form-item>

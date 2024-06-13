@@ -63,6 +63,7 @@ public class OrderServiceImpl implements IOrderService
         order.setOrderId(String.valueOf(snowFlakeUtil.nextId()));
         order.setUserName(getUsername());
         order.setCreateDate(LocalDateTime.now());
+        order.setAllPrice(order.getPrice() * order.getNum());
         return orderMapper.insertOrder(order);
     }
 
