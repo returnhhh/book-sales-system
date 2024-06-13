@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="图书id" prop="bookId">
+      <el-form-item label="图书编号" prop="bookId">
         <el-input
           v-model="queryParams.bookId"
-          placeholder="请输入图书id"
+          placeholder="请输入图书编号"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -59,7 +59,7 @@
     <el-table v-loading="loading" :data="cartList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="购物车id" align="center" prop="scId" />
-      <el-table-column label="图书id" align="center" prop="bookId" />
+      <el-table-column label="图书编号" align="center" prop="bookId" />
       <el-table-column label="用户id" align="center" prop="userId" />
       <el-table-column label="数量" align="center" prop="num" />
       <el-table-column label="书名" align="center" prop="bookName" />

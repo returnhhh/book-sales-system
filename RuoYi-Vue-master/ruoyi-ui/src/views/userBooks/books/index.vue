@@ -95,7 +95,7 @@
       <el-table-column label="库存" align="center" prop="bookNum" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-input-number style="width: 120px; margin-left: 1px; margin-bottom: 10px;" v-model="form.num" :min="1" :max="100" label="描述文字"></el-input-number>
+          <el-input-number style="width: 120px; margin-left: 1px; margin-bottom: 10px;" v-model="scope.row.num" :min="1" :max="100" label="描述文字"></el-input-number>
           <br />
           <el-button style="background-color: orangered; margin-left: 1px; color: white; margin-top: 10px;" @click="handleAddCart(scope.row)">加入购物车</el-button>
         </template>
@@ -160,7 +160,7 @@ export default {
       },
       // 表单参数
       form: {
-        num: 1,
+        num: null,
         bookId:null,
         bookName:null,
         bookImg: null,
@@ -218,6 +218,7 @@ export default {
       this.form.bookName = row.bookName
       this.form.price = row.bookPrice
       this.form.bookImg = row.bookImg
+      this.form.num = row.num
       console.log(this.form);
 
       const bookIds = row.bookId || this.ids;
