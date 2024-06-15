@@ -9,6 +9,24 @@ export function listOrder(query) {
   })
 }
 
+// 本周中每天已支付订单的数量统计
+export function listOrderAnalysis(query) {
+  return request({
+    url: '/orderManagement/order/listAnalysis',
+    method: 'get',
+    params: query
+  })
+}
+
+// 本周中销量最高的前五本书
+export function listOrderAnalysis1(query) {
+  return request({
+    url: '/orderManagement/order/listAnalysis1',
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询订单管理详细
 export function getOrder(orderId) {
   return request({
