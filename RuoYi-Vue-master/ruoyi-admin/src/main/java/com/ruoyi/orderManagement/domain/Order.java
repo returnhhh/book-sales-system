@@ -66,6 +66,10 @@ public class Order extends BaseEntity
     @Excel(name = "更新时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateDate;
 
+    /** 订单状态  */
+    @Excel(name = "订单状态")
+    private String state;
+
     public void setOrderId(String orderId) 
     {
         this.orderId = orderId;
@@ -173,6 +177,14 @@ public class Order extends BaseEntity
         this.updateDate = updateDate;
     }
 
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -188,6 +200,7 @@ public class Order extends BaseEntity
             .append("address", getAddress())
             .append("createTime", getCreateDate())
             .append("updateTime", getUpdateDate())
+            .append("state",getState())
             .toString();
     }
 }
