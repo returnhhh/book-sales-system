@@ -42,6 +42,8 @@ public class ShoppingCart extends BaseEntity
     /** 用户名 */
     private String userName;
 
+
+
     public void setScId(String scId) 
     {
         this.scId = scId;

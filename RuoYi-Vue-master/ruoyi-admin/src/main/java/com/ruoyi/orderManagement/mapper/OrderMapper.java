@@ -74,4 +74,6 @@ public interface OrderMapper
      * @return 结果
      */
     public int deleteOrderByOrderIds(String[] orderIds);
+
+    int updateState(String orderId);
 }

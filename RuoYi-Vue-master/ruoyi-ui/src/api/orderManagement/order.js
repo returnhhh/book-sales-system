@@ -35,6 +35,15 @@ export function getOrder(orderId) {
   })
 }
 
+export function updateState(orderId) {
+  return request({
+    url:'/orderManagement/order/updateState/'+orderId,
+    method:'put'
+  })
+}
+
+
+
 // 新增订单管理
 export function addOrder(data) {
   return request({

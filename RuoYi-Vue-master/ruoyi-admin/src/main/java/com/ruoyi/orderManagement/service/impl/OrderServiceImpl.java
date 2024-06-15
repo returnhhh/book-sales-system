@@ -126,4 +126,9 @@ public class OrderServiceImpl implements IOrderService
     {
         return orderMapper.deleteOrderByOrderId(orderId);
     }
+
+    @Override
+    public int updateState(String orderId) {
+        return orderMapper.updateState(orderId);
+    }
 }

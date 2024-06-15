@@ -124,4 +124,15 @@ public class OrderController extends BaseController
     {
         return toAjax(orderService.deleteOrderByOrderIds(orderIds));
     }
+
+    /**
+     * 修改支付状态
+     */
+    @PutMapping("/updateState/{orderId}")
+    public AjaxResult updateState(@PathVariable String orderId)
+    {
+        System.out.println(orderId);
+        return toAjax(orderService.updateState(orderId));
+    }
+
 }
