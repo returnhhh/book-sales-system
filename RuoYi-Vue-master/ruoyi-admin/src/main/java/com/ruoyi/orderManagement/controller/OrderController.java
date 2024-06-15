@@ -47,9 +47,9 @@ public class OrderController extends BaseController
     }
 
     /**
-     * 查询销量数据分析
+     * 本周中每天已支付订单的数量统计
      */
-    @PreAuthorize("@ss.hasPermi('orderManagement:order:list')")
+//    @PreAuthorize("@ss.hasPermi('orderManagement:order:list')")
     @GetMapping("/listAnalysis")
     public TableDataInfo listAnalysis(Order order)
     {

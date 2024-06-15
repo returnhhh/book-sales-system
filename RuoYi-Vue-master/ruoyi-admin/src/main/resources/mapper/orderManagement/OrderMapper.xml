@@ -41,12 +41,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
 
-<!--    订单数据分析-->
+<!--    本周中每天已支付订单的数量统计-->
     <select id="selectOrderListAnalysis" parameterType="order" resultMap="OrderResult">
-        SELECT state AS '支付状态',
-                COUNT(order_id) AS '订单数量'
+        SELECT DATE(create_date) AS '日期',
+            COUNT(order_id) AS '已支付订单数量'
         FROM `order`
-        GROUP BY state;
+        WHERE YEARWEEK(create_date, 1) = YEARWEEK(CURDATE(), 1) AND state = '已支付'
+        GROUP BY DATE(create_date)
+        ORDER BY DATE(create_date);
     </select>
 
     <select id="selectOrderByOrderId" parameterType="String" resultMap="OrderResult">
