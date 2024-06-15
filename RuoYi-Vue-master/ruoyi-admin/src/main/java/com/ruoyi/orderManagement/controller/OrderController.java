@@ -59,6 +59,18 @@ public class OrderController extends BaseController
     }
 
     /**
+     * 本周中销量最高的前五本书
+     */
+//    @PreAuthorize("@ss.hasPermi('orderManagement:order:list')")
+    @GetMapping("/listAnalysis1")
+    public TableDataInfo listAnalysis1(Order order)
+    {
+        startPage();
+        List<Order> list = orderService.selectOrderListAnalysis1(order);
+        return getDataTable(list);
+    }
+
+    /**
      * 导出订单管理列表
      */
     @PreAuthorize("@ss.hasPermi('orderManagement:order:export')")
