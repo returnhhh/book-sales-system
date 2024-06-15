@@ -39,7 +39,7 @@ public class BooksController extends BaseController
     /**
      * 查询图书商城信息列表
      */
-    @PreAuthorize("@ss.hasPermi('books:books:list')")
+//    @PreAuthorize("@ss.hasPermi('books:books:list')")
     @GetMapping("/list")
     public TableDataInfo list(Books books)
     {
@@ -52,7 +52,7 @@ public class BooksController extends BaseController
     /**
      * 导出图书商城信息列表
      */
-    @PreAuthorize("@ss.hasPermi('books:books:export')")
+//    @PreAuthorize("@ss.hasPermi('books:books:export')")
     @Log(title = "图书商城信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Books books)
@@ -65,7 +65,7 @@ public class BooksController extends BaseController
     /**
      * 获取图书商城信息详细信息
      */
-    @PreAuthorize("@ss.hasPermi('books:books:query')")
+//    @PreAuthorize("@ss.hasPermi('books:books:query')")
     @GetMapping(value = "/{bookId}")
     public AjaxResult getInfo(@PathVariable("bookId") String bookId)
     {

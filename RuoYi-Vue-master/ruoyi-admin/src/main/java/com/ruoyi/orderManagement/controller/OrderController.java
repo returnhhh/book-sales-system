@@ -47,14 +47,26 @@ public class OrderController extends BaseController
     }
 
     /**
-     * 查询销量数据分析
+     * 本周中每天已支付订单的数量统计
      */
-    @PreAuthorize("@ss.hasPermi('orderManagement:order:list')")
+//    @PreAuthorize("@ss.hasPermi('orderManagement:order:list')")
     @GetMapping("/listAnalysis")
     public TableDataInfo listAnalysis(Order order)
     {
         startPage();
         List<Order> list = orderService.selectOrderListAnalysis(order);
+        return getDataTable(list);
+    }
+
+    /**
+     * 本周中销量最高的前五本书
+     */
+//    @PreAuthorize("@ss.hasPermi('orderManagement:order:list')")
+    @GetMapping("/listAnalysis1")
+    public TableDataInfo listAnalysis1(Order order)
+    {
+        startPage();
+        List<Order> list = orderService.selectOrderListAnalysis1(order);
         return getDataTable(list);
     }
 

@@ -52,7 +52,7 @@ public class OrderServiceImpl implements IOrderService
     }
 
     /**
-     * 订单数据分析
+     * 本周中每天已支付订单的数量统计
      *
      * @param order 订单分析
      * @return 订单数据分析
@@ -61,6 +61,17 @@ public class OrderServiceImpl implements IOrderService
     public List<Order> selectOrderListAnalysis(Order order)
     {
         return orderMapper.selectOrderListAnalysis(order);
+    }
+
+    /**
+     * 本周中销量最高的前五本书
+     *
+     * @param order 订单分析
+     * @return 订单数据分析
+     */
+    public List<Order> selectOrderListAnalysis1(Order order)
+    {
+        return orderMapper.selectOrderListAnalysis1(order);
     }
 
     /**
