@@ -28,6 +28,14 @@ public interface IOrderService
     public List<Order> selectOrderList(Order order);
 
     /**
+     * 订单数据分析
+     *
+     * @param order 订单分析
+     * @return 订单数据分析
+     */
+    public List<Order> selectOrderListAnalysis(Order order);
+
+    /**
      * 新增订单管理
      * 
      * @param order 订单管理
