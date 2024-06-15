@@ -51,11 +51,11 @@ public class OrderController extends BaseController
      */
 //    @PreAuthorize("@ss.hasPermi('orderManagement:order:list')")
     @GetMapping("/listAnalysis")
-    public TableDataInfo listAnalysis(Order order)
+    public AjaxResult listAnalysis(Order order)
     {
-        startPage();
         List<Order> list = orderService.selectOrderListAnalysis(order);
-        return getDataTable(list);
+        System.out.println(list);
+        return success(list);
     }
 
     /**
@@ -63,11 +63,10 @@ public class OrderController extends BaseController
      */
 //    @PreAuthorize("@ss.hasPermi('orderManagement:order:list')")
     @GetMapping("/listAnalysis1")
-    public TableDataInfo listAnalysis1(Order order)
+    public AjaxResult listAnalysis1(Order order)
     {
-        startPage();
         List<Order> list = orderService.selectOrderListAnalysis1(order);
-        return getDataTable(list);
+        return success(list);
     }
 
     /**

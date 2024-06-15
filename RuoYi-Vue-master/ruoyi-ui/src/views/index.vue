@@ -35,18 +35,46 @@
 </template>
 
 <script>
-import {listOrder, listOrderAnalysis} from "@/api/orderManagement/order";
+import {listOrder, listOrderAnalysis, listOrderAnalysis1} from "@/api/orderManagement/order";
 
 export default {
   name: "Index",
   data() {
     return {
+      bookName:[],
+      number:[],
+      time:[],
       // 版本号
       version: "3.8.7"
     };
   },
   mounted() {
-    this.getBooks()
+    listOrderAnalysis1().then(response=>{
+      console.log(response);
+      let result=response.data
+      this.bookName=new Array(result.length)
+      this.number=new Array(result.length)
+      for(let i=0;i<result.length;i++){
+        let books=result[i]
+        this.bookName[i]=books.bookName
+        this.number[i]=books.number
+      }
+      this.getBooks()
+    })
+
+    listOrderAnalysis().then(response=>{
+      console.log(response);
+      let result=response.data
+      this.bookName=new Array(result.length)
+      this.number=new Array(result.length)
+      for(let i=0;i<result.length;i++){
+        let books=result[i]
+        this.time[i]=books.time
+        this.number[i]=books.number
+      }
+      this.getBookss()
+    })
+
     this.getBookss()
   },
   methods: {
@@ -70,14 +98,14 @@ export default {
         },
         tooltip: {},
         xAxis: {
-          data: ['Shirts', 'Cardigans', 'Chiffons', 'Pants', 'Heels', 'Socks']
+          data: this.bookName
         },
         yAxis: {},
         series: [
           {
             name: 'sales',
             type: 'bar',
-            data: [5, 20, 36, 10, 10, 20]
+            data: this.number
           }
         ]
       };
@@ -88,14 +116,14 @@ export default {
       let option = {
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          data: this.time
         },
         yAxis: {
           type: 'value'
         },
         series: [
           {
-            data: [150, 230, 224, 218, 135, 147, 260],
+            data: this.number,
             type: 'line'
           }
         ]

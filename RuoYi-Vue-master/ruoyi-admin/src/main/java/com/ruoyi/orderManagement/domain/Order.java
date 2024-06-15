@@ -1,6 +1,8 @@
 package com.ruoyi.orderManagement.domain;
 
 import java.time.LocalDateTime;
+import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -69,6 +71,19 @@ public class Order extends BaseEntity
     /** 订单状态  */
     @Excel(name = "订单状态")
     private String state;
+
+
+    /** 订单数量统计  */
+    @Excel(name = "数量")
+    private Long number;
+
+    /** 支付成功时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "支付成功时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date time;
+
+
+
 
     public void setOrderId(String orderId) 
     {
@@ -185,6 +200,22 @@ public class Order extends BaseEntity
         this.state = state;
     }
 
+    public Long getNumber() {
+        return number;
+    }
+
+    public void setNumber(Long number) {
+        this.number = number;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -201,6 +232,8 @@ public class Order extends BaseEntity
             .append("createTime", getCreateDate())
             .append("updateTime", getUpdateDate())
             .append("state",getState())
+            .append("number",getNumber())
+            .append("time",getTime())
             .toString();
     }
 }
