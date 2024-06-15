@@ -81,6 +81,7 @@
       <el-table-column label="收货人姓名" align="center" prop="contactName" />
       <el-table-column label="收货人手机号" align="center" prop="phone" />
       <el-table-column label="收货人地址" align="center" prop="address" />
+      <el-table-column label="状态" align="center" prop="order" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
