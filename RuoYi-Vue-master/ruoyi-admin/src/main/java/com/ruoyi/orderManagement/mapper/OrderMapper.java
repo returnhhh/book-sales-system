@@ -36,6 +36,14 @@ public interface OrderMapper
     public List<Order> selectOrderListAnalysis(Order order);
 
     /**
+     * 本周中销量最高的前五本书
+     *
+     * @param order 订单分析
+     * @return 订单数据分析
+     */
+    public List<Order> selectOrderListAnalysis1(Order order);
+
+    /**
      * 新增订单管理
      * 
      * @param order 订单管理
