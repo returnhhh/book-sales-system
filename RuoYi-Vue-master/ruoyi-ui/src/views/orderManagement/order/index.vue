@@ -88,6 +88,12 @@
             size="mini"
             type="text"
             icon="el-icon-edit"
+            @click="payment(scope.row)"
+          >支付</el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['orderManagement:order:edit']"
           >修改</el-button>
@@ -132,7 +138,7 @@
 </template>
 
 <script>
-import { listOrder, getOrder, delOrder, addOrder, updateOrder } from "@/api/orderManagement/order";
+import {listOrder, getOrder, delOrder, addOrder, updateOrder, updateState} from "@/api/orderManagement/order";
 
 export default {
   name: "Order",
@@ -235,6 +241,14 @@ export default {
       this.reset();
       this.open = true;
       this.title = "添加订单管理";
+    },
+    /** 支付按钮操作 */
+    payment(row) {
+      const orderId = row.orderId || this.ids
+      updateState(orderId).then(response=>{
+        console.log(response);
+        this.getList()
+      })
     },
     /** 修改按钮操作 */
     handleUpdate(row) {

@@ -74,4 +74,6 @@ public interface IOrderService
      * @return 结果
      */
     public int deleteOrderByOrderId(String orderId);
+
+    int updateState(String orderId);
 }
