@@ -17,10 +17,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="address"    column="address"    />
         <result property="createDate"    column="create_date"    />
         <result property="updateDate"    column="update_date"    />
+        <result property="state"    column="state"    />
     </resultMap>
 
     <sql id="selectOrderVo">
-        select order_id, user_name, book_name, book_id, price, num, all_price, contact_name, phone, address, create_date, update_date from `order`
+        select order_id, user_name, book_name, book_id, price, num, all_price, contact_name, phone, address, create_date, update_date,state from `order`
     </sql>
 
     <select id="selectOrderList" parameterType="Order" resultMap="OrderResult">
@@ -36,9 +37,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="contactName != null  and contactName != ''"> and contact_name like concat('%', #{contactName}, '%')</if>
             <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
             <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="state != null  and state != ''"> and state = #{state}</if>
         </where>
     </select>
-    
+
+<!--    订单数据分析-->
+    <select id="selectOrderListAnalysis" parameterType="order" resultMap="OrderResult">
+        SELECT state AS '支付状态',
+                COUNT(order_id) AS '订单数量'
+        FROM `order`
+        GROUP BY state;
+    </select>
+
     <select id="selectOrderByOrderId" parameterType="String" resultMap="OrderResult">
         <include refid="selectOrderVo"/>
         where order_id = #{orderId}
@@ -59,6 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="address != null">address,</if>
             <if test="createDate != null">create_date,</if>
             <if test="updateDate != null">update_date,</if>
+            <if test="state != null">state,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="orderId != null">#{orderId},</if>
@@ -73,6 +84,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="address != null">#{address},</if>
             <if test="createDate != null">#{createDate},</if>
             <if test="updateDate != null">#{updateDate},</if>
+            <if test="state != null">#{state},</if>
          </trim>
     </insert>
 
@@ -90,6 +102,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="address != null">address = #{address},</if>
             <if test="createDate != null">create_date = #{createDate},</if>
             <if test="updateDate != null">update_date = #{updateDate},</if>
+            <if test="state != null">state = #{state},</if>
         </trim>
         where order_id = #{orderId}
     </update>

@@ -52,6 +52,18 @@ public class OrderServiceImpl implements IOrderService
     }
 
     /**
+     * 订单数据分析
+     *
+     * @param order 订单分析
+     * @return 订单数据分析
+     */
+    @Override
+    public List<Order> selectOrderListAnalysis(Order order)
+    {
+        return orderMapper.selectOrderListAnalysis(order);
+    }
+
+    /**
      * 新增订单管理
      * 
      * @param order 订单管理

@@ -47,6 +47,18 @@ public class OrderController extends BaseController
     }
 
     /**
+     * 查询销量数据分析
+     */
+    @PreAuthorize("@ss.hasPermi('orderManagement:order:list')")
+    @GetMapping("/listAnalysis")
+    public TableDataInfo listAnalysis(Order order)
+    {
+        startPage();
+        List<Order> list = orderService.selectOrderListAnalysis(order);
+        return getDataTable(list);
+    }
+
+    /**
      * 导出订单管理列表
      */
     @PreAuthorize("@ss.hasPermi('orderManagement:order:export')")
