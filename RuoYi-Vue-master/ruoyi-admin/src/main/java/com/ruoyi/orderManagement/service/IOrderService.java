@@ -2,6 +2,7 @@ package com.ruoyi.orderManagement.service;
 
 import java.util.List;
 import com.ruoyi.orderManagement.service.domain.Order;
+import com.ruoyi.orderManagement.service.domain.UpdateOrder;
 
 /**
  * 订单管理Service接口
@@ -75,6 +76,6 @@ public interface IOrderService
      */
     public int deleteOrderByOrderId(String orderId);
 
-    int updateState(String orderId);
-    int updateNum(String orderId,Long num);
+    int updateState(UpdateOrder updateOrder);
+
 }

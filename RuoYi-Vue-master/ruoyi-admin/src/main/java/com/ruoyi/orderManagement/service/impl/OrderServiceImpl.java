@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.ruoyi.SnowFlakeUtil.java.SnowFlakeUtil;
+import com.ruoyi.orderManagement.service.domain.UpdateOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.orderManagement.mapper.OrderMapper;
@@ -127,14 +128,9 @@ public class OrderServiceImpl implements IOrderService
     }
 
     @Override
-    public int updateState(String orderId) {
+    public int updateState(UpdateOrder updateOrder) {
 
-        return orderMapper.updateState(orderId);
+        return orderMapper.updateState(updateOrder);
     }
 
-    @Override
-    public int updateNum(String orderId,Long num){
-
-        return orderMapper.updateNum(orderId,num);
-    }
 }

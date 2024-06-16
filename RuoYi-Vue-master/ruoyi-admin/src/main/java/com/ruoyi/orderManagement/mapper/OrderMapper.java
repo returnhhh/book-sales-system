@@ -2,6 +2,7 @@ package com.ruoyi.orderManagement.mapper;
 
 import java.util.List;
 import com.ruoyi.orderManagement.service.domain.Order;
+import com.ruoyi.orderManagement.service.domain.UpdateOrder;
 
 /**
  * 订单管理Mapper接口
@@ -77,14 +78,8 @@ public interface OrderMapper
 
     /**
      * 更新支付状态
-     * @param orderId  需要更新的订单主键
      * @return 支付状态
      */
-    int updateState(String orderId);
+    int updateState(UpdateOrder updateOrder);
 
-
-    /**
-     * 更新库存数据
-     */
-    int updateNum(String orderId, Long num);
 }

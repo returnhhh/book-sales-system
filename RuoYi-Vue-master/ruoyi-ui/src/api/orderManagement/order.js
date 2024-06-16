@@ -35,10 +35,11 @@ export function getOrder(orderId) {
   })
 }
 
-export function updateState(orderId) {
+export function updateState(data) {
   return request({
-    url:'/orderManagement/order/updateState/'+orderId,
-    method:'put'
+    url:'/orderManagement/order/updateState',
+    method:'post',
+    data:data
   })
 }
 

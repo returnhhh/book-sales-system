@@ -3,15 +3,9 @@ package com.ruoyi.orderManagement.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ruoyi.orderManagement.service.domain.UpdateOrder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -128,19 +122,11 @@ public class OrderController extends BaseController
     /**
      * 修改支付状态
      */
-    @PutMapping("/updateState/{orderId}")
-    public AjaxResult updateState(@PathVariable String orderId)
+    @PostMapping ("/updateState")
+    public AjaxResult updateState(@RequestBody UpdateOrder updateOrder)
     {
-        System.out.println(orderId);
-        return toAjax(orderService.updateState(orderId));
+
+        return toAjax(orderService.updateState(updateOrder));
     }
-    /**
-     * 修改库存数量
-     */
-    @PutMapping("/updateNum/{orderId}")
-    public AjaxResult updateNum(@PathVariable String orderId,Long num)
-    {
-        System.out.println(orderId);
-        return toAjax(orderService.updateNum(orderId,num));
-    }
+
 }

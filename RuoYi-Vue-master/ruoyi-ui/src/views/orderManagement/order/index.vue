@@ -74,11 +74,11 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="payment(scope.row)"
-          >支付</el-button>
+          size="mini"
+          type="text"
+          icon="el-icon-edit"
+          @click="payment(scope.row)"
+        >支付</el-button>
           <el-button
             size="mini"
             type="text"
@@ -131,6 +131,11 @@ export default {
   name: "Order",
   data() {
     return {
+      updateOrder:{
+        num:null,
+        orderId:null
+      },
+
       // 遮罩层
       loading: true,
       // 选中数组
@@ -232,21 +237,13 @@ export default {
     /** 支付按钮操作 */
     payment(row) {
       const orderId = row.orderId || this.ids
-      updateState(orderId).then(response=>{
+      this.updateOrder.orderId=orderId
+      this.updateOrder.num=row.num
+      console.log(this.updateOrder);
+      updateState(this.updateOrder).then(response=>{
         console.log(response);
         this.getList()
       })
-    },
-    /** 更新库存数据操作 */
-    updateNum(row){
-      const orderId = row.orderId;
-      const num = row.num;
-      const url = `/orderManagement/order/updateNum?orderId=${encodeURIComponent(orderId)}&num=${encodeURIComponent(num)}`;
-
-      fetch(url)
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.error('Error:', error));
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
