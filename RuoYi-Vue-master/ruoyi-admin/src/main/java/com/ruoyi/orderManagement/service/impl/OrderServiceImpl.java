@@ -4,11 +4,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.ruoyi.SnowFlakeUtil.java.SnowFlakeUtil;
-import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.orderManagement.mapper.OrderMapper;
-import com.ruoyi.orderManagement.domain.Order;
+import com.ruoyi.orderManagement.service.domain.Order;
 import com.ruoyi.orderManagement.service.IOrderService;
 
 import static com.ruoyi.common.utils.SecurityUtils.getUsername;
@@ -129,6 +128,13 @@ public class OrderServiceImpl implements IOrderService
 
     @Override
     public int updateState(String orderId) {
+
         return orderMapper.updateState(orderId);
+    }
+
+    @Override
+    public int updateNum(String orderId,Long num){
+
+        return orderMapper.updateNum(orderId,num);
     }
 }

@@ -75,7 +75,7 @@ public class BooksController extends BaseController
     /**
      * 新增图书商城信息
      */
-    @PreAuthorize("@ss.hasPermi('books:books:add')")
+//    @PreAuthorize("@ss.hasPermi('books:books:add')")
     @Log(title = "图书商城信息", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Books books)
@@ -86,7 +86,7 @@ public class BooksController extends BaseController
     /**
      * 修改图书商城信息
      */
-    @PreAuthorize("@ss.hasPermi('books:books:edit')")
+//    @PreAuthorize("@ss.hasPermi('books:books:edit')")
     @Log(title = "图书商城信息", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Books books)
@@ -99,7 +99,7 @@ public class BooksController extends BaseController
     /**
      * 删除图书商城信息
      */
-    @PreAuthorize("@ss.hasPermi('books:books:remove')")
+//    @PreAuthorize("@ss.hasPermi('books:books:remove')")
     @Log(title = "图书商城信息", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{bookIds}")
     public AjaxResult remove(@PathVariable String[] bookIds)

@@ -37,14 +37,6 @@
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-        >删除</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -77,20 +69,8 @@
             size="mini"
             type="text"
             icon="el-icon-edit"
-            @click="payment(scope.row)"
-          >支付</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
           >修改</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -236,17 +216,6 @@ export default {
         console.log(response);
         this.getList()
       })
-    },
-    /** 更新库存数据操作 */
-    updateNum(row){
-      const orderId = row.orderId;
-      const num = row.num;
-      const url = `/orderManagement/order/updateNum?orderId=${encodeURIComponent(orderId)}&num=${encodeURIComponent(num)}`;
-
-      fetch(url)
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.error('Error:', error));
     },
     /** 修改按钮操作 */
     handleUpdate(row) {

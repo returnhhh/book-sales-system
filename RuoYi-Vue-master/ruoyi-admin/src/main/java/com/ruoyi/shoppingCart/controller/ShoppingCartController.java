@@ -42,7 +42,7 @@ public class ShoppingCartController extends BaseController
     /**
      * 查询购物车信息列表
      */
-    @PreAuthorize("@ss.hasPermi('shoppingCart:cart:list')")
+//    @PreAuthorize("@ss.hasPermi('shoppingCart:cart:list')")
     @GetMapping("/list")
     public TableDataInfo list(ShoppingCart shoppingCart)
     {
@@ -54,7 +54,7 @@ public class ShoppingCartController extends BaseController
     /**
      * 导出购物车信息列表
      */
-    @PreAuthorize("@ss.hasPermi('shoppingCart:cart:export')")
+//    @PreAuthorize("@ss.hasPermi('shoppingCart:cart:export')")
     @Log(title = "购物车信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, ShoppingCart shoppingCart)
@@ -67,7 +67,7 @@ public class ShoppingCartController extends BaseController
     /**
      * 获取购物车信息详细信息
      */
-    @PreAuthorize("@ss.hasPermi('shoppingCart:cart:query')")
+//    @PreAuthorize("@ss.hasPermi('shoppingCart:cart:query')")
     @GetMapping(value = "/{scId}")
     public AjaxResult getInfo(@PathVariable("scId") String scId)
     {
@@ -77,7 +77,7 @@ public class ShoppingCartController extends BaseController
     /**
      * 新增购物车信息
      */
-    @PreAuthorize("@ss.hasPermi('shoppingCart:cart:add')")
+//    @PreAuthorize("@ss.hasPermi('shoppingCart:cart:add')")
     @Log(title = "购物车信息", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody ShoppingCart shoppingCart)
@@ -88,7 +88,7 @@ public class ShoppingCartController extends BaseController
     /**
      * 修改购物车信息
      */
-    @PreAuthorize("@ss.hasPermi('shoppingCart:cart:edit')")
+//    @PreAuthorize("@ss.hasPermi('shoppingCart:cart:edit')")
     @Log(title = "购物车信息", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody ShoppingCart shoppingCart)
@@ -99,7 +99,7 @@ public class ShoppingCartController extends BaseController
     /**
      * 删除购物车信息
      */
-    @PreAuthorize("@ss.hasPermi('shoppingCart:cart:remove')")
+//    @PreAuthorize("@ss.hasPermi('shoppingCart:cart:remove')")
     @Log(title = "购物车信息", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{scIds}")
     public AjaxResult remove(@PathVariable String[] scIds)

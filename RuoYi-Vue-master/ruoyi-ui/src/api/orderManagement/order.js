@@ -42,6 +42,13 @@ export function updateState(orderId) {
   })
 }
 
+//更新库存
+export function updateNum(orderId){
+  return request({
+    url:'/orderManagement/order/updateNum/'+orderId,
+    method:'put'
+  })
+}
 
 
 // 新增订单管理

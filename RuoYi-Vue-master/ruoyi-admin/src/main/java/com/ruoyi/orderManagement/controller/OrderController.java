@@ -2,7 +2,7 @@ package com.ruoyi.orderManagement.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +16,7 @@ import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.orderManagement.domain.Order;
+import com.ruoyi.orderManagement.service.domain.Order;
 import com.ruoyi.orderManagement.service.IOrderService;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
@@ -37,7 +37,7 @@ public class OrderController extends BaseController
     /**
      * 查询订单管理列表
      */
-    @PreAuthorize("@ss.hasPermi('orderManagement:order:list')")
+//    @PreAuthorize("@ss.hasPermi('orderManagement:order:list')")
     @GetMapping("/list")
     public TableDataInfo list(Order order)
     {
@@ -72,7 +72,7 @@ public class OrderController extends BaseController
     /**
      * 导出订单管理列表
      */
-    @PreAuthorize("@ss.hasPermi('orderManagement:order:export')")
+//    @PreAuthorize("@ss.hasPermi('orderManagement:order:export')")
     @Log(title = "订单管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Order order)
@@ -85,7 +85,7 @@ public class OrderController extends BaseController
     /**
      * 获取订单管理详细信息
      */
-    @PreAuthorize("@ss.hasPermi('orderManagement:order:query')")
+//    @PreAuthorize("@ss.hasPermi('orderManagement:order:query')")
     @GetMapping(value = "/{orderId}")
     public AjaxResult getInfo(@PathVariable("orderId") String orderId)
     {
@@ -95,7 +95,7 @@ public class OrderController extends BaseController
     /**
      * 新增订单管理
      */
-    @PreAuthorize("@ss.hasPermi('orderManagement:order:add')")
+//    @PreAuthorize("@ss.hasPermi('orderManagement:order:add')")
     @Log(title = "订单管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Order order)
@@ -106,7 +106,7 @@ public class OrderController extends BaseController
     /**
      * 修改订单管理
      */
-    @PreAuthorize("@ss.hasPermi('orderManagement:order:edit')")
+//    @PreAuthorize("@ss.hasPermi('orderManagement:order:edit')")
     @Log(title = "订单管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Order order)
@@ -117,7 +117,7 @@ public class OrderController extends BaseController
     /**
      * 删除订单管理
      */
-    @PreAuthorize("@ss.hasPermi('orderManagement:order:remove')")
+//    @PreAuthorize("@ss.hasPermi('orderManagement:order:remove')")
     @Log(title = "订单管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{orderIds}")
     public AjaxResult remove(@PathVariable String[] orderIds)
@@ -134,5 +134,13 @@ public class OrderController extends BaseController
         System.out.println(orderId);
         return toAjax(orderService.updateState(orderId));
     }
-
+    /**
+     * 修改库存数量
+     */
+    @PutMapping("/updateNum/{orderId}")
+    public AjaxResult updateNum(@PathVariable String orderId,Long num)
+    {
+        System.out.println(orderId);
+        return toAjax(orderService.updateNum(orderId,num));
+    }
 }

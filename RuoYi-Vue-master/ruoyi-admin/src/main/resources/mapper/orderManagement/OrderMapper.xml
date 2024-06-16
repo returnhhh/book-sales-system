@@ -122,6 +122,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         set state='已支付'
         where order_id=#{orderId}
     </update>
+    <update id="updateNum">
+        UPDATE books
+        JOIN `order` ON books.book_id = order.book_id
+        SET books.book_num = books.book_num - #{num}
+        WHERE order.order_id=#{orderId};
+    </update>
 
     <delete id="deleteOrderByOrderId" parameterType="String">
         delete from `order` where order_id = #{orderId}
@@ -133,4 +139,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{orderId}
         </foreach>
     </delete>
+
 </mapper>

@@ -94,10 +94,8 @@
                 </el-form-item>
                 <!-- 对话框底部操作按钮 -->
                 </el-form>
-                <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="handleAddOrder(scope.row)">确定</el-button>
-      </span>
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button style="background-color: cornflowerblue; margin-left: 1px; color: white; margin-top: 10px;" @click="handleAddOrder(scope.row)">确定</el-button>
               </el-dialog>
             </div>
 <!--          <el-button-->
@@ -234,6 +232,29 @@ export default {
     },
     /** 购物车物品添加到订单按钮 */
     handleAddOrder(row) {
+      this.form.scId = row.scId
+      this.form.bookId = row.bookId
+      this.form.userId = row.userId
+      this.form.bookName = row.bookName
+      this.form.price = row.price
+      this.form.bookImg = row.bookImg
+      this.form.num = row.num
+      this.form.userName = row.userName
+      this.form.phone = row.phone
+      this.form.contactName = row.contactName
+      this.form.address = row.address
+      console.log(this.form);
+
+      const scIds = row.scId || this.ids;
+      const books = this.form;
+      this.$modal.confirm('是否添加订单id为"' + scIds + '"的数据项？').then(function() {
+        return addOrder(books);
+      }).then(() => {
+        this.$modal.msgSuccess("添加成功");
+      }).catch(() => {});
+    },
+    /** 购物车物品添加到订单按钮 */
+    handleAddOrder1(row) {
       this.form.scId = row.scId
       this.form.bookId = row.bookId
       this.form.userId = row.userId
