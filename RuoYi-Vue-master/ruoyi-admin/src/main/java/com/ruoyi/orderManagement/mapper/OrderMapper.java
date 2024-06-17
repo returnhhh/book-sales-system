@@ -1,8 +1,8 @@
 package com.ruoyi.orderManagement.mapper;
 
 import java.util.List;
-import com.ruoyi.orderManagement.service.domain.Order;
-import com.ruoyi.orderManagement.service.domain.UpdateOrder;
+import com.ruoyi.orderManagement.domain.Order;
+import com.ruoyi.orderManagement.domain.UpdateOrder;
 
 /**
  * 订单管理Mapper接口

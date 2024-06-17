@@ -40,7 +40,6 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['shoppingCart:cart:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -50,7 +49,6 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['shoppingCart:cart:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -73,7 +71,7 @@
         <template slot-scope="scope">
             <div>
               <!-- 触发对话框显示的按钮 -->
-              <el-button type="primary" @click="dialogVisible = true">下单</el-button>
+              <el-button type="primary" @click="showDlg(scope.row.scId,scope.row.bookId,scope.row.userId,scope.row.bookName,scope.row.price,scope.row.bookImg,scope.row.num,scope.row.userName,scope.row.phone,scope.row.contactName,scope.row.address)">下单</el-button>
 
               <!-- 对话框组件 -->
               <el-dialog
@@ -86,10 +84,10 @@
                 <el-form-item label="收货人姓名" prop="contactName">
                 <el-input  v-model="scope.row.contactName" placeholder="请输入收货人姓名"></el-input>
                 </el-form-item>
-                <el-form-item label="联系电话" prop="contactName">
+                <el-form-item label="联系电话" prop="phone">
                 <el-input  v-model="scope.row.phone" placeholder="请输入联系电话"></el-input>
                 </el-form-item>
-                <el-form-item label="收货地址" prop="contactName">
+                <el-form-item label="收货地址" prop="address">
                 <el-input  v-model="scope.row.address" placeholder="请输入收货地址"></el-input>
                 </el-form-item>
                 <!-- 对话框底部操作按钮 -->
@@ -98,26 +96,17 @@
                 <el-button style="background-color: cornflowerblue; margin-left: 1px; color: white; margin-top: 10px;" @click="handleAddOrder(scope.row)">确定</el-button>
               </el-dialog>
             </div>
-<!--          <el-button-->
-<!--            style="background-color: orangered;-->
-<!--            margin-left: 1px;-->
-<!--            color: white;-->
-<!--            margin-top: 10px;"-->
-<!--            @click="handleAddOrder(scope.row)"-->
-<!--          >下单</el-button>-->
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['shoppingCart:cart:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['shoppingCart:cart:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -154,6 +143,7 @@ export default {
   name: "Cart",
   data() {
     return {
+      currentId : '',
       dialogVisible: false, // 控制对话框的显示与隐藏
       // 遮罩层
       loading: true,
@@ -201,6 +191,18 @@ export default {
     this.getList();
   },
   methods: {
+    showDlg(scId,bookId,userId,bookName,price,bookImg,num,userName){
+      this.currentId = scId
+      this.dialogVisible = true
+      this.bookId = bookId
+      this.userId = userId
+      this.bookName = bookName
+      this.price = price
+      this.bookImg = bookImg
+      this.num = num
+      this.userName = userName
+
+    },
     /** 查询购物车信息列表 */
     getList() {
       this.loading = true;
@@ -232,43 +234,20 @@ export default {
     },
     /** 购物车物品添加到订单按钮 */
     handleAddOrder(row) {
-      this.form.scId = row.scId
-      this.form.bookId = row.bookId
-      this.form.userId = row.userId
-      this.form.bookName = row.bookName
-      this.form.price = row.price
-      this.form.bookImg = row.bookImg
-      this.form.num = row.num
-      this.form.userName = row.userName
+      this.form.scId = this.currentId
+      this.form.bookId = this.bookId
+      this.form.userId = this.userId
+      this.form.bookName = this.bookName
+      this.form.price = this.price
+      this.form.bookImg = this.bookImg
+      this.form.num = this.num
+      this.form.userName = this.userName
       this.form.phone = row.phone
       this.form.contactName = row.contactName
       this.form.address = row.address
       console.log(this.form);
 
-      const scIds = row.scId || this.ids;
-      const books = this.form;
-      this.$modal.confirm('是否添加订单id为"' + scIds + '"的数据项？').then(function() {
-        return addOrder(books);
-      }).then(() => {
-        this.$modal.msgSuccess("添加成功");
-      }).catch(() => {});
-    },
-    /** 购物车物品添加到订单按钮 */
-    handleAddOrder1(row) {
-      this.form.scId = row.scId
-      this.form.bookId = row.bookId
-      this.form.userId = row.userId
-      this.form.bookName = row.bookName
-      this.form.price = row.price
-      this.form.bookImg = row.bookImg
-      this.form.num = row.num
-      this.form.userName = row.userName
-      this.form.phone = row.phone
-      this.form.contactName = row.contactName
-      this.form.address = row.address
-      console.log(this.form);
-
-      const scIds = row.scId || this.ids;
+      const scIds = this.currentId || this.ids;
       const books = this.form;
       this.$modal.confirm('是否添加订单id为"' + scIds + '"的数据项？').then(function() {
         return addOrder(books);

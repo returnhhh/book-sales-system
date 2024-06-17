@@ -1,4 +1,4 @@
-package com.ruoyi.orderManagement.service.domain;
+package com.ruoyi.orderManagement.domain;
 
 import java.time.LocalDateTime;
 import java.util.Date;

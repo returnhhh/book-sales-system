@@ -41,23 +41,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
 
-<!--    本周中每天已支付订单的数量统计-->
-    <select id="selectOrderListAnalysis" parameterType="order" resultMap="OrderResult">
+<!--    最近一个月中每天已支付订单的数量统计-->
+    <select id="selectOrderListAnalysis" parameterType="Order" resultMap="OrderResult">
         SELECT DATE(create_date) AS time,
             COUNT(order_id) AS number
         FROM `order`
-        WHERE YEARWEEK(create_date, 1) = YEARWEEK(CURDATE(), 1) AND state = '已支付'
+        WHERE create_date BETWEEN DATE_SUB(CURDATE(), INTERVAL 1 MONTH) AND CURDATE()
+          AND state = '已支付'
         GROUP BY DATE(create_date)
         ORDER BY DATE(create_date);
     </select>
 
-    <!--    本周中销量最高的前五本书-->
-    <select id="selectOrderListAnalysis1" parameterType="order" resultMap="OrderResult">
-        SELECT book_name,
-            COUNT(order_id) AS number
-        FROM `order`
-        WHERE YEARWEEK(create_date, 1) = YEARWEEK(CURDATE(), 1) AND state = '已支付'
-        GROUP BY book_name;
+    <!--    最近一个月销量-->
+    <select id="selectOrderListAnalysis1" parameterType="Order" resultMap="OrderResult">
+            SELECT book_name,
+                COUNT(order_id) AS number
+            FROM `order`
+            WHERE create_date BETWEEN DATE_SUB(CURDATE(), INTERVAL 1 MONTH) AND CURDATE()
+              AND state = '已支付'
+            GROUP BY book_name;
     </select>
 
     <select id="selectOrderByOrderId" parameterType="String" resultMap="OrderResult">
@@ -118,10 +120,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where order_id = #{orderId}
     </update>
     <update id="updateState" parameterType="updateOrder">
-        update `books`
-        JOIN `order` ON books.book_id = order.book_id
-        set `order`.state='已支付' , books.book_num = books.book_num - #{num}
-        where order_id=#{orderId}
+--         update `books`
+--         JOIN `order` ON books.book_id = order.book_id
+--         set `order`.state='已支付' , books.book_num = books.book_num - #{num}
+--         where order_id=#{orderId}
     </update>
 
     <delete id="deleteOrderByOrderId" parameterType="String">

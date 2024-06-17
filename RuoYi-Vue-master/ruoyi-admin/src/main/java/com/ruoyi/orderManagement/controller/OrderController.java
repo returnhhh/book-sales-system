@@ -3,14 +3,14 @@ package com.ruoyi.orderManagement.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ruoyi.orderManagement.service.domain.UpdateOrder;
+import com.ruoyi.orderManagement.domain.UpdateOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.orderManagement.service.domain.Order;
+import com.ruoyi.orderManagement.domain.Order;
 import com.ruoyi.orderManagement.service.IOrderService;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
