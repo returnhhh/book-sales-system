@@ -14,23 +14,6 @@
       <div id="main" style="width: 900px; height: 600px;"></div>
       <div id="main1" style="width: 900px; height: 600px;"></div>
     </div>
-<!--      <el-col :xs="24" :sm="24" :md="12" :lg="8">-->
-<!--        <el-card class="update-log">-->
-<!--          <div slot="header" class="clearfix">-->
-<!--            <span>捐赠支持</span>-->
-<!--          </div>-->
-<!--          <div class="body">-->
-<!--            <img-->
-<!--              src="@/assets/images/pay.png"-->
-<!--              alt="donate"-->
-<!--              width="100%"-->
-<!--            />-->
-<!--            <span style="display: inline-block; height: 30px; line-height: 30px"-->
-<!--              >你可以请作者喝杯咖啡表示鼓励</span-->
-<!--            >-->
-<!--          </div>-->
-<!--        </el-card>-->
-<!--      </el-col>-->
   </div>
 </template>
 
@@ -94,7 +77,7 @@ export default {
       let myChart = this.$echarts.init(document.getElementById("main"));
       let option = {
         title: {
-          text: '本周销量'
+          text: '近一个月销量'
         },
         tooltip: {},
         xAxis: {

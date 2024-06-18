@@ -126,6 +126,9 @@ public class OrderController extends BaseController
     public AjaxResult updateState(@RequestBody UpdateOrder updateOrder)
     {
 
+        System.out.println(updateOrder);
+        AjaxResult list = toAjax(orderService.updateState(updateOrder));
+        System.out.println(list);
         return toAjax(orderService.updateState(updateOrder));
     }
 
