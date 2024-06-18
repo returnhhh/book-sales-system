@@ -93,10 +93,10 @@
       </el-table-column>
       <el-table-column label="库存" align="center" prop="bookNum" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
-          <el-input-number style="width: 120px; margin-left: 1px; margin-bottom: 10px;" v-model="scope.row.num" :min="1" :max="100" label="描述文字"></el-input-number>
+        <template #default="{row}">
+          <el-input-number style="width: 120px; margin-left: 1px; margin-bottom: 10px;" v-model="row.num" ></el-input-number>
           <br />
-          <el-button style="background-color: orangered; margin-left: 1px; color: white; margin-top: 10px;" @click="handleAddCart(scope.row)">加入购物车</el-button>
+          <el-button style="background-color: orangered; margin-left: 1px; color: white; margin-top: 10px;" @click="handleAddCart(row)">加入购物车</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -170,18 +170,32 @@ export default {
       }
     };
   },
-  created() {
+  async created() {
     this.getList();
+
   },
   methods: {
+    handleadd(value,index) {
+     // console.log(value,row)
+     //  row.num = value
+      console.log(value)
+      this.booksList[index].num = value
+      this.$forceUpdate()
+    },
     /** 查询图书商城信息列表 */
-    getList() {
+    async getList() {
       this.loading = true;
-      listBooks(this.queryParams).then(response => {
-        this.booksList = response.rows;
-        this.total = response.total;
-        this.loading = false;
-      });
+      let response = await listBooks(this.queryParams);
+      this.booksList = response.rows;
+
+      this.total = response.total;
+      this.loading = false;
+
+      this.booksList = this.booksList.map(book => ({...book,num:1}))
+
+    },
+    handleChange(value) {
+      console.log(value);
     },
     // 取消按钮
     cancel() {
