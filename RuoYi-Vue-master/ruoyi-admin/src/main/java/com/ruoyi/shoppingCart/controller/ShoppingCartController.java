@@ -82,7 +82,16 @@ public class ShoppingCartController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody ShoppingCart shoppingCart)
     {
-        return toAjax(shoppingCartService.insertShoppingCart(shoppingCart));
+        System.out.println(shoppingCart);
+        Long num=shoppingCart.getNum();
+        String bookId=shoppingCart.getBookId();
+        Books book= booksService.selectBooksByBookId(bookId);
+        Long maxNum=book.getBookNum();
+        if(num<maxNum){
+        return toAjax(shoppingCartService.insertShoppingCart(shoppingCart));}
+        else{
+            return new AjaxResult(201,"库存数量不足");
+        }
     }
 
     /**

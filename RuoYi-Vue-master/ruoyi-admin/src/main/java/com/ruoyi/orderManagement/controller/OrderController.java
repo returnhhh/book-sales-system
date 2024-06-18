@@ -125,8 +125,14 @@ public class OrderController extends BaseController
     @PostMapping ("/updateState")
     public AjaxResult updateState(@RequestBody UpdateOrder updateOrder)
     {
+        String orderId = updateOrder.getOrderId();
+        Order order=orderService.selectOrderByOrderId(orderId);
+        if(order.getState().equals("已支付")){
+            return new AjaxResult(201,"支付重复,无法进行重复支付");
+        }else {
+            return toAjax(orderService.updateState(updateOrder));
+        }
 
-        return toAjax(orderService.updateState(updateOrder));
     }
 
 }
