@@ -194,9 +194,6 @@ export default {
       this.booksList = this.booksList.map(book => ({...book,num:1}))
 
     },
-    handleChange(value) {
-      console.log(value);
-    },
     // 取消按钮
     cancel() {
       this.open = false;

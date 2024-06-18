@@ -180,7 +180,8 @@ export default {
       form: {
         phone: null,
         contactName:null,
-        address:null
+        address:null,
+        state : null
       },
       // 表单校验
       rules: {
@@ -245,6 +246,8 @@ export default {
       this.form.phone = row.phone
       this.form.contactName = row.contactName
       this.form.address = row.address
+      this.form.state = "未支付"
+      this.dialogVisible = false
       console.log(this.form);
 
       const scIds = this.currentId || this.ids;
