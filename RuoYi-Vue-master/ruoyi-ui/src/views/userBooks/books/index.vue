@@ -94,7 +94,7 @@
       <el-table-column label="库存" align="center" prop="bookNum" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="{row}">
-          <el-input-number style="width: 120px; margin-left: 1px; margin-bottom: 10px;" v-model="row.num" ></el-input-number>
+          <el-input-number style="width: 120px; margin-left: 1px; margin-bottom: 10px;" v-model="row.num" :min="1"></el-input-number>
           <br />
           <el-button style="background-color: orangered; margin-left: 1px; color: white; margin-top: 10px;" @click="handleAddCart(row)">加入购物车</el-button>
         </template>

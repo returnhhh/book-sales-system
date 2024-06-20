@@ -3,6 +3,8 @@ package com.ruoyi.orderManagement.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ruoyi.books.domain.Books;
+import com.ruoyi.books.service.IBooksService;
 import com.ruoyi.orderManagement.domain.UpdateOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +29,9 @@ public class OrderController extends BaseController
 {
     @Autowired
     private IOrderService orderService;
+
+    @Autowired
+    private IBooksService booksService;
 
     /**
      * 查询订单管理列表
@@ -126,11 +131,19 @@ public class OrderController extends BaseController
     public AjaxResult updateState(@RequestBody UpdateOrder updateOrder)
     {
 
-
-        System.out.println(updateOrder);
-        AjaxResult list = toAjax(orderService.updateState(updateOrder));
-        System.out.println(list);
-        return toAjax(orderService.updateState(updateOrder));
+        String orderId = updateOrder.getOrderId();
+        Order order = orderService.selectOrderByOrderId(orderId);
+        Long num= order.getNum();
+        String bookId = order.getBookId();
+        Books book = booksService.selectBooksByBookId(bookId);
+        Long maxNum = book.getBookNum();
+        if(order.getState().equals("已支付")){
+            return new AjaxResult(201,"支付重复，无法进行重复支付");
+        } else if (num>maxNum) {
+            return new AjaxResult(201,"库存数量不足");
+        } else {
+            return toAjax(orderService.updateState(updateOrder));
+        }
     }
 
 }
